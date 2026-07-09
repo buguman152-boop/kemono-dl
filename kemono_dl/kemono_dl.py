@@ -10,6 +10,7 @@ from typing import List, Literal
 from requests.exceptions import RequestException
 
 from .downloader import download_file
+from .logger import ErrorLogger
 from .models import Attachment, Creator, FavoriteCreator, FileTemplateVaribales, Post
 from .session import CustomSession
 from .utils import compute_sha256, generate_file_path, get_sha256_hash  # , get_sha256_url_content
@@ -67,6 +68,9 @@ class KemonoDL:
         self.archived_posts = []
         self.load_archive_file()
 
+        # Error logging - one logger per creator
+        self.error_loggers: dict[tuple[str, str, str], ErrorLogger] = {}
+
     def load_archive_file(self) -> None:
         if self.archive_file and os.path.isfile(self.archive_file):
             with open(self.archive_file, "r") as f:
@@ -89,6 +93,13 @@ class KemonoDL:
             site, service, creator_id, post_id = match.groups()
             return {"site": site, "service": service, "creator_id": creator_id, "post_id": post_id}
         return None
+
+    def _get_or_create_error_logger(self, service: str, creator_id: str, creator_name: str = "unknown") -> ErrorLogger:
+        """Get or create an error logger for a specific creator."""
+        key = (service, creator_id, creator_name)
+        if key not in self.error_loggers:
+            self.error_loggers[key] = ErrorLogger(self.path, service, creator_id, creator_name)
+        return self.error_loggers[key]
 
     def load_cookies(self, cookies_file: str) -> bool:
         try:
@@ -318,6 +329,9 @@ class KemonoDL:
 
         print(f"[downloading] Attachments: {len(post.attachments)}")
 
+        # Initialize error logger for this creator
+        error_logger = self._get_or_create_error_logger(creator.service, creator.id, creator.name)
+
         for attachment in post.attachments:
             if self.attachment_matches_filters(attachment):
                 print("[info] Attachment matched 1 or more attachment filters. Skipping.")
@@ -353,15 +367,42 @@ class KemonoDL:
             else:
                 url = f"{attachment.server}/data{attachment.path}"
 
+            download_failed = False
+            error_code = None
+            error_message = ""
+
             for attempt in range(self.max_retries):
                 try:
                     download_file(self.session, url, file_path, temp_file=not self.no_tmp)
+                    download_failed = False
                     break
-                except Exception as e:
+                except RequestException as e:
+                    download_failed = True
+                    error_message = str(e)
+                    # Try to extract HTTP status code from the exception
+                    if hasattr(e, 'response') and e.response is not None:
+                        error_code = e.response.status_code
                     print(f"[Error] Failed to download attachment from {url!r}: {e}")
-            else:
+                except Exception as e:
+                    download_failed = True
+                    error_message = str(e)
+                    print(f"[Error] Failed to download attachment from {url!r}: {e}")
+
+            if download_failed:
                 print(f"[Error] All {self.max_retries} download reties failed")
-                return
+                # Log the error
+                error_logger.log_error(
+                    url=url,
+                    post_id=post.id,
+                    post_title=post.title,
+                    error_code=error_code,
+                    error_message=error_message,
+                    attachment_info={
+                        "name": attachment.name,
+                        "path": attachment.path,
+                    }
+                )
+                continue
 
             actual_sha256 = get_sha256_hash(file_path)
             if expected_sha256 != actual_sha256:
