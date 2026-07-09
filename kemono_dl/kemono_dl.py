@@ -332,6 +332,9 @@ class KemonoDL:
         # Initialize error logger for this creator
         error_logger = self._get_or_create_error_logger(creator.service, creator.id, creator.name)
 
+        # Construct the post URL for error logging
+        post_url = f"{domain}/{creator.service}/user/{creator.id}/post/{post.id}"
+
         for attachment in post.attachments:
             if self.attachment_matches_filters(attachment):
                 print("[info] Attachment matched 1 or more attachment filters. Skipping.")
@@ -393,6 +396,7 @@ class KemonoDL:
                     url=url,
                     post_id=post.id,
                     post_title=post.title,
+                    post_url=post_url,
                     error_code=error_code,
                     error_message=error_message,
                     attachment_info={
