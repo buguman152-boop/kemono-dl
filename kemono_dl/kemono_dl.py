@@ -367,28 +367,26 @@ class KemonoDL:
             else:
                 url = f"{attachment.server}/data{attachment.path}"
 
-            download_failed = False
             error_code = None
             error_message = ""
+            download_success = False
 
             for attempt in range(self.max_retries):
                 try:
                     download_file(self.session, url, file_path, temp_file=not self.no_tmp)
-                    download_failed = False
+                    download_success = True
                     break
                 except RequestException as e:
-                    download_failed = True
                     error_message = str(e)
                     # Try to extract HTTP status code from the exception
                     if hasattr(e, 'response') and e.response is not None:
                         error_code = e.response.status_code
                     print(f"[Error] Failed to download attachment from {url!r}: {e}")
                 except Exception as e:
-                    download_failed = True
                     error_message = str(e)
                     print(f"[Error] Failed to download attachment from {url!r}: {e}")
 
-            if download_failed:
+            if not download_success:
                 print(f"[Error] All {self.max_retries} download reties failed")
                 # Log the error
                 error_logger.log_error(
@@ -402,6 +400,7 @@ class KemonoDL:
                         "path": attachment.path,
                     }
                 )
+                print(f"[info] Error logged to: {error_logger.log_file_path}")
                 continue
 
             actual_sha256 = get_sha256_hash(file_path)
