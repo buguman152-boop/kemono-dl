@@ -45,6 +45,7 @@ class ErrorLogger:
         url: str,
         post_id: str,
         post_title: str,
+        post_url: str = "",
         error_code: Optional[int] = None,
         error_message: str = "",
         attachment_info: Optional[dict] = None,
@@ -56,15 +57,17 @@ class ErrorLogger:
             url: URL that failed to download
             post_id: Post ID associated with the error
             post_title: Post title for reference
+            post_url: Post URL on the service (e.g., https://pawchive.pw/patreon/user/123/post/456)
             error_code: HTTP error code (404, 503, etc.) or None for other errors
             error_message: Error message/details
             attachment_info: Additional info about the attachment
         """
         error_entry = {
             "timestamp": datetime.now().isoformat(),
-            "url": url,
+            "file_url": url,
             "post_id": post_id,
             "post_title": post_title,
+            "post_url": post_url,
             "error_code": error_code,
             "error_message": str(error_message),
             "attachment_info": attachment_info or {},
