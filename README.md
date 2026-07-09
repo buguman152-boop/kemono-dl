@@ -3,11 +3,11 @@ A downloader tool for kemono and coomer and pawchive websties.
 > ⚠️ Kemono and Coomer file servers are dead and attempting to download from them will fail. Kemono-dl has been updated to support pawchive a Kemono alternative using the same api layout.
 
 
-> ⚠️ Starting from version `2025.08.13`, kemonod-dl is no longer fully backward compatible with earlier releases. If you prefer the default download template used in older versions, you can manually specify it using:
+> ⚠️ Starting from version `2025.08.13`, kemonod-dl is no longer fully backward compatible with earlier releases. If you prefer the default download template used in older versions, you can man[...]
 > ```bash
 > --output "{service}/{creator_name} [{creator_id}]/[{published:%Y%m%d}] [{post_id}] {post_title}/{index}_{filename}"
 > ```
-> Keep in mind that while this template closely mirrors the previous behavior, older versions included logic to truncate file paths and names exceeding 255 characters. This new version does not replicate that trimming exactly, but the template should still work correctly in most cases.
+> Keep in mind that while this template closely mirrors the previous behavior, older versions included logic to truncate file paths and names exceeding 255 characters. This new version does not re[...]
  
 ## Installation
 1. **Install Python**  
@@ -33,28 +33,28 @@ A downloader tool for kemono and coomer and pawchive websties.
 
 # Command Line Options
 
-| Option                             | Description                                                                                                                                                   |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--version`                        | Prints the version then quits.                                                                                                                                |
-| `--path PATH`                      | Set the base path for downloads.                                                                                                                              |
-| `--output [Type:]TEMPLATE(s)`      | Set the output template file pattern. See [Output Template](https://github.com/AlphaSlayer1964/kemono-dl?tab=readme-ov-file#output-template) for more detail. |
-| `--batch-file FILE`                | Loads urls from file. One url per line.                                                                                                                       |
-| `--cookies FILEs`                  | Provide a cookies file(s) for Kemono/Coomer. Required for `--favorite-creators-coomer` and `--favorite-creators-kemono`.                                      |
-| `--favorite-creators-coomer`       | Download all favorite creators from Coomer.                                                                                                                   |
-| `--favorite-creators-kemono`       | Download all favorite creators from Kemono.                                                                                                                   |
-| `--coomer-login USERNAME PASSWORD` | Username and password for Coomer.                                                                                                                             |
-| `--kemono-login USERNAME PASSWORD` | Username and password for Kemono.                                                                                                                             |
-| `--restrict-name`                  | Restrict output file to ASCII characters.                                                                                                                     |
-| `--custom-template-variables FILE` | Path to a json file with your custom template variables                                                                                                       |
-| `--date [Type:]DATE`               | Download only posts published on this date. Format 'YYYYMMDD' **(\*1)**                                                                                       |
-| `--datebefore [Type:]DATE`         | Download only posts published on or before this date. Format 'YYYYMMDD' **(\*1)**                                                                             |
-| `--dateafter [Type:]DATE`          | Download only posts published on or after this date. Format 'YYYYMMDD' **(\*1)**                                                                              |
-| `--skip-extensions EXTs`           | A comma seperated list of file extensions to skip (Do not include the period) (Checks the extention of the filename not the server filename).                 |
-| `--skip-attachments`               | Skip downloading post attachments.                                                                                                                            |
-| `--write-content`                  | Write the post content to a file.                                                                                                                             |
-| `--no-tmp`                         | Do not use `.tmp` files. Write directly into the output file.                                                                                                 |
+| Option                             | Description                                                                                                                                                  [...]
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------[...]
+| `--version`                        | Prints the version then quits.                                                                                                                               [...]
+| `--path PATH`                      | Set the base path for downloads.                                                                                                                             [...]
+| `--output [Type:]TEMPLATE(s)`      | Set the output template file pattern. See [Output Template](https://github.com/AlphaSlayer1964/kemono-dl?tab=readme-ov-file#output-template) for more detail.[...]
+| `--batch-file FILE`                | Loads urls from file. One url per line.                                                                                                                      [...]
+| `--cookies FILEs`                  | Provide a cookies file(s) for Kemono/Coomer. Required for `--favorite-creators-coomer` and `--favorite-creators-kemono`.                                     [...]
+| `--favorite-creators-coomer`       | Download all favorite creators from Coomer.                                                                                                                  [...]
+| `--favorite-creators-kemono`       | Download all favorite creators from Kemono.                                                                                                                  [...]
+| `--coomer-login USERNAME PASSWORD` | Username and password for Coomer.                                                                                                                            [...]
+| `--kemono-login USERNAME PASSWORD` | Username and password for Kemono.                                                                                                                            [...]
+| `--restrict-name`                  | Restrict output file to ASCII characters.                                                                                                                    [...]
+| `--custom-template-variables FILE` | Path to a json file with your custom template variables                                                                                                      [...]
+| `--date [Type:]DATE`               | Download only posts published on this date. Format 'YYYYMMDD' **(\*1)**                                                                                      [...]
+| `--datebefore [Type:]DATE`         | Download only posts published on or before this date. Format 'YYYYMMDD' **(\*1)**                                                                            [...]
+| `--dateafter [Type:]DATE`          | Download only posts published on or after this date. Format 'YYYYMMDD' **(\*1)**                                                                             [...]
+| `--skip-extensions EXTs`           | A comma seperated list of file extensions to skip (Do not include the period) (Checks the extention of the filename not the server filename).                [...]
+| `--skip-attachments`               | Skip downloading post attachments.                                                                                                                           [...]
+| `--write-content`                  | Write the post content to a file.                                                                                                                            [...]
+| `--no-tmp`                         | Do not use `.tmp` files. Write directly into the output file.                                                                                                [...]
 
-> **\*1** You can apply date filters to different types. The available options are `"added:YYYYMMDD"`, `"edited:YYYYMMDD"`, and `"published:YYYYMMDD"`. If no type is specified, the published date is used by default.
+> **\*1** You can apply date filters to different types. The available options are `"added:YYYYMMDD"`, `"edited:YYYYMMDD"`, and `"published:YYYYMMDD"`. If no type is specified, the published date [...]
 
 ## Output Template
 
@@ -78,25 +78,25 @@ patreon/12345/67890/content.html
 
 ### Output Template Variables
 
-| Variable              | Description                                                                                                                                                                                                 |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `{service}`           | Service Name.                                                                                                                                                                                               |
-| `{creator_id}`        | Creator's ID                                                                                                                                                                                                |
-| `{creator_name}`      | Creator's name.                                                                                                                                                                                             |
-| `{post_id}`           | Post ID.                                                                                                                                                                                                    |
-| `{post_title}`        | Post title.                                                                                                                                                                                                 |
-| `{server_filename}`   | Server file name (with extension).                                                                                                                                                                          |
-| `{server_file_name}`  | Server file name (without extension) (equivalent to `{sha256}`).                                                                                                                                            |
-| `{server_file_ext}`   | Server file extension (without the ".") (May be different from `{file_ext}`).                                                                                                                               |
-| `{filename}`          | Original file name (with extension). **(\*4)**                                                                                                                                                              |
-| `{file_name}`         | Original file name (without extension).                                                                                                                                                                     |
-| `{file_ext}`          | Original file extension (without the ".") (May be different from `{server_file_ext}`).                                                                                                                      |
-| `{sha256}`            | SHA-256 hash of the file generated by Kemono/Coomer.                                                                                                                                                        |
-| `{added}`             | DateTime the post was added to kemono/coomer. Use `{added:FORMAT}` to format. See [format codes](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes). **(\*1, \*2, \*3)**   |
-| `{published}`         | DateTime the post was published to service. Use `{published:FORMAT}` to format. See [format codes](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes). **(\*1, \*2, \*3)** |
-| `{edited}`            | DateTime the post was edited by kemono/coomer. Use `{edited:FORMAT}` to format. See [format codes](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes). **(\*1, \*2, \*3)** |
-| `{index}`             | The index order of the posts file and attachments. (Starts at 0) **(\*5)**                                                                                                                                  |
-| `{attachments_count}` | The total number of post attchments (Includes post file).                                                                                                                                                   |
+| Variable              | Description                                                                                                                                                               [...]
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------[...]
+| `{service}`           | Service Name.                                                                                                                                                             [...]
+| `{creator_id}`        | Creator's ID                                                                                                                                                              [...]
+| `{creator_name}`      | Creator's name.                                                                                                                                                           [...]
+| `{post_id}`           | Post ID.                                                                                                                                                                  [...]
+| `{post_title}`        | Post title.                                                                                                                                                               [...]
+| `{server_filename}`   | Server file name (with extension).                                                                                                                                        [...]
+| `{server_file_name}`  | Server file name (without extension) (equivalent to `{sha256}`).                                                                                                          [...]
+| `{server_file_ext}`   | Server file extension (without the ".") (May be different from `{file_ext}`).                                                                                             [...]
+| `{filename}`          | Original file name (with extension). **(\*4)**                                                                                                                            [...]
+| `{file_name}`         | Original file name (without extension).                                                                                                                                   [...]
+| `{file_ext}`          | Original file extension (without the ".") (May be different from `{server_file_ext}`).                                                                                    [...]
+| `{sha256}`            | SHA-256 hash of the file generated by Kemono/Coomer.                                                                                                                      [...]
+| `{added}`             | DateTime the post was added to kemono/coomer. Use `{added:FORMAT}` to format. See [format codes](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-for[...]
+| `{published}`         | DateTime the post was published to service. Use `{published:FORMAT}` to format. See [format codes](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-f[...]
+| `{edited}`            | DateTime the post was edited by kemono/coomer. Use `{edited:FORMAT}` to format. See [format codes](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-f[...]
+| `{index}`             | The index order of the posts file and attachments. (Starts at 0) **(\*5)**                                                                                                [...]
+| `{attachments_count}` | The total number of post attchments (Includes post file).                                                                                                                 [...]
 
 > **\*1** If there is an error parsinf `{added}`, `{published}`, or `{edited}` it will default to `January 1, 0001`. This includes if any of those values are `Null` for the post.  
 
@@ -138,3 +138,79 @@ Custom variables can also reference built-in template variables using `{...}` sy
 }
 ```
 In your output template, simply use the variables like the default ones (ie `{titleTrunc}`) to insert their evaluated values.
+
+## Error Logging
+
+### Overview
+
+kemono-dl automatically logs download errors (such as 404, 503, and other HTTP errors) to help you track failed downloads. Error logs are saved as JSON files for easy analysis.
+
+### Log Storage
+
+Error logs are stored in the **creator's folder**, one log file per creator:
+
+```
+{download_path}/{service}/{creator_name} [{creator_id}]/error_log.json
+```
+
+**Example:**
+```
+downloads/patreon/Artist Name [12345]/error_log.json
+```
+
+### Log File Format
+
+Each error entry contains:
+
+- **timestamp**: When the error occurred (ISO 8601 format)
+- **url**: The URL that failed to download
+- **post_id**: The post ID associated with the error
+- **post_title**: The post title for reference
+- **error_code**: HTTP status code (404, 503, etc.) or null for non-HTTP errors
+- **error_message**: Description of the error
+- **attachment_info**: Information about the attachment (name and path)
+
+**Example error_log.json:**
+```json
+[
+  {
+    "timestamp": "2026-07-09T12:34:56.789123",
+    "url": "https://file.pawchive.pw/data/path/to/file.jpg",
+    "post_id": "12345",
+    "post_title": "Post Title Here",
+    "error_code": 404,
+    "error_message": "404 Client Error: Not Found for url: ...",
+    "attachment_info": {
+      "name": "filename.jpg",
+      "path": "/data/path/to/file.jpg"
+    }
+  },
+  {
+    "timestamp": "2026-07-09T12:35:10.123456",
+    "url": "https://file.pawchive.pw/data/path/to/image.png",
+    "post_id": "12346",
+    "post_title": "Another Post",
+    "error_code": 503,
+    "error_message": "503 Server Error: Service Unavailable for url: ...",
+    "attachment_info": {
+      "name": "image.png",
+      "path": "/data/path/to/image.png"
+    }
+  }
+]
+```
+
+### Tracking Errors
+
+- Errors are logged automatically when a download fails after all retry attempts
+- Each creator has their own error log, making it easy to see which creators have problematic content
+- The log file is created automatically in the creator's folder alongside downloaded content
+- Errors are appended to the log file, preserving a complete history
+
+### Using Error Logs
+
+Use the error log to:
+1. Identify which files failed to download
+2. Determine if errors are temporary (503) or permanent (404)
+3. Trace failed downloads back to specific posts and creators
+4. Analyze patterns in download failures
